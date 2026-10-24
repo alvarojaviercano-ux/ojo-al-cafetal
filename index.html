@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Ojo al Cafetal – Research</title>
-<meta name="description" content="Research report, Phase 1 (CRISP-ML): finding coffee leaf diseases from a photo.">
+<meta name="description" content="Final project, Machine Learning: spot coffee leaf diseases from a photo.">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,45 +16,63 @@
 <nav><div class="wrap">
   <b>Ojo al Cafetal</b>
   <a href="#problem">Problem</a>
-  <a href="#solution">Solution</a>
-  <a href="#data">Data</a>
-  <a href="#quality">Quality</a>
-  <a href="#risks">Risks</a>
-  <a href="#models">Models</a>
-  <a href="#next">Next</a>
-  <a href="#sources">Sources</a>
+  <a href="#objectives">Objectives</a>
+  <a href="#framework">Reference framework</a>
+  <a href="#references">References</a>
 </div></nav>
 
 <header class="hero"><div class="wrap">
-  <p class="kicker">Phase 1 · Business and data understanding · CRISP-ML</p>
+  <p class="kicker">Project title</p>
   <h1>Ojo al Cafetal</h1>
   <p class="sub">Spot coffee leaf diseases from a photo.</p>
   <p class="by">Álvaro Javier Cano · Machine Learning · UDEC · Final project</p>
 </div></header>
 
 <section id="problem"><div class="wrap">
-  <h2>The problem: we find diseases too late</h2>
-  <p class="lead">Coffee is a big part of Colombia. When a coffee plant gets sick, you see it on the leaf first.</p>
+  <h2>Problem statement and justification</h2>
+  <p class="lead">Coffee is a big part of Colombia. When a coffee plant gets sick, you see it on the leaf first. But we often find the disease too late.</p>
   <div class="grid">
     <div class="card"><h3>Leaf damage</h3><p>Rust and red spider mites leave spots and make the leaf weak.</p></div>
     <div class="card"><h3>Little expert help</h3><p>Many farmers have no expert close by to check every plant.</p></div>
     <div class="card"><h3>Late detection</h3><p>When we find the disease late, it spreads and the farmer loses coffee.</p></div>
   </div>
   <div class="callout"><b>Guiding question:</b> can we find the disease with just one photo?</div>
-  <p class="note">The name comes from a Colombian saying. “Ojo al cafetal” means “keep an eye on the coffee farm.”</p>
-</div></section>
 
-<section id="solution" class="alt"><div class="wrap">
-  <h2>The solution</h2>
-  <p class="lead">A simple web page. It checks a photo of a leaf and tells the farmer what to do.</p>
+  <h3 style="margin:34px 0 12px">The solution</h3>
+  <p class="lead" style="margin-bottom:16px">A simple web page. It checks a photo of a leaf and tells the farmer what to do.</p>
   <ol class="steps">
     <li><b>Upload.</b> The user takes a photo of one leaf with a phone and sends it.</li>
     <li><b>Analyze.</b> The model looks at the leaf. It checks the color and the spots.</li>
     <li><b>Receive.</b> The user gets a clear answer: which disease it is, how bad it is, and what to do.</li>
   </ol>
-  <div class="callout" style="border-color:var(--green);background:#E8F2EA"><b>Business goal:</b> help the coffee farmer act on time, with a simple web tool.</div>
 
-  <h3 style="margin-top:34px;margin-bottom:12px">Key questions and the model for each</h3>
+  <h3 style="margin:34px 0 12px">Why it is worth doing</h3>
+  <ul>
+    <li>It helps the farmer act on time and lose less coffee.</li>
+    <li>It only needs a phone and the internet. No expert visit is needed for a first check.</li>
+    <li>I can do it: I already use Flask, scikit-learn, and Render in my earlier modules, so I do not need new tools.</li>
+  </ul>
+  <p class="note" style="margin-top:14px">The name comes from a Colombian saying. “Ojo al cafetal” means “keep an eye on the coffee farm.”</p>
+</div></section>
+
+<section id="objectives" class="alt"><div class="wrap">
+  <h2>Project objectives</h2>
+  <div class="callout" style="border-color:var(--green);background:#E8F2EA"><b>General objective:</b> build a web app that finds coffee leaf diseases from a photo, so farmers can act on time.</div>
+  <h3 style="margin:26px 0 12px">Specific objectives</h3>
+  <ol class="steps">
+    <li>Check that the RoCoLe data is good enough for the project: its quality, its use, and its size.</li>
+    <li>Prepare the photos: clean them, group the classes, and add my own photos of arabica leaves.</li>
+    <li>Build and compare the models: K-Means, Linear Regression, Logistic Regression, KNN, and Q-Learning.</li>
+    <li>Measure how well the models work, with accuracy, precision, and recall. Test them with real photos.</li>
+    <li>Put the web app online on Render, so farmers can use it from a phone.</li>
+  </ol>
+</div></section>
+
+<section id="framework"><div class="wrap">
+  <h2>Reference framework</h2>
+  <p class="lead">The data I will use, and the models from our course.</p>
+
+  <h3 style="margin-bottom:12px">Key questions and the model for each</h3>
   <table>
     <tr><th>Question</th><th>Possible model</th></tr>
     <tr><td>Is the leaf healthy or sick?</td><td>Logistic Regression</td></tr>
@@ -63,7 +81,7 @@
     <tr><td>How much is damaged?</td><td>Linear Regression</td></tr>
     <tr><td>What is the best action?</td><td>Reinforcement Learning (Q-Learning)</td></tr>
   </table>
-  <p class="note" style="margin-top:10px">These are my first ideas. I will pick and test the models in Phase 3.</p>
+  <p class="note" style="margin-top:10px">These are my first ideas. I will pick and test the models later.</p>
 </div></section>
 
 <section id="data" class="dark"><div class="wrap">
@@ -84,7 +102,7 @@
     <div class="bar" style="color:var(--cream)"><span>Rust level 3</span><i style="width:7.8%"></i><span>62</span></div>
     <div class="bar" style="color:var(--cream)"><span>Rust level 4</span><i style="width:3.8%"></i><span>30</span></div>
   </div>
-  <p><b style="color:var(--orange)">There are about 26 times more healthy leaves than rust level 4 leaves.</b> The model could learn to always say “healthy.” I will fix this in the next phases.</p>
+  <p><b style="color:var(--orange)">There are about 26 times more healthy leaves than rust level 4 leaves.</b> The model could learn to always say “healthy.” I will fix this by grouping the classes: healthy, mild rust, severe rust, and mite.</p>
   <p class="note" style="color:#D9CBBB">Rust level, by how much of the leaf has spots: 1 = 1–5%, 2 = 6–20%, 3 = 21–50%, 4 = more than 50%.</p>
 </div></section>
 
@@ -112,24 +130,14 @@
     </div>
   </div>
   <div class="callout"><b>My plan:</b> I will use RoCoLe as a base. Then I will take my own photos of Colombian arabica leaves (for example Castillo and Caturra) to test the model in real conditions. I will explain these limits in the final report.</div>
+  <p class="note">Another risk: photos can be very different. The web page will ask for one leaf, good light, and a plain background.</p>
 </div></section>
 
-<section id="risks" class="alt"><div class="wrap">
-  <h2>Can I do it? Feasibility and risks</h2>
-  <p class="lead">Yes, I can do it. I already use Flask, scikit-learn, and Render in my earlier modules, so I do not need new tools.</p>
-  <table>
-    <tr><th>Risk</th><th>What I will do</th></tr>
-    <tr><td>The classes are not balanced</td><td>I will group them: healthy, mild rust, severe rust, and mite.</td></tr>
-    <tr><td>The data is robusta, not arabica, and not from Colombia</td><td>I will say it is a limit of the model. I will also test it with my own photos of arabica leaves.</td></tr>
-    <tr><td>Photos can be very different</td><td>The web page will ask for one leaf, good light, and a plain background.</td></tr>
-  </table>
-</div></section>
-
-<section id="models"><div class="wrap">
-  <h2>Theory: the models from our course</h2>
+<section id="models" class="alt"><div class="wrap">
+  <h2>The models from our course</h2>
   <p class="lead">Each model answers a different question about a leaf. Here is how each one works, in simple words.</p>
   <div class="grid">
-    <div class="card"><span class="tag">K-MEANS</span><h3>Which part is affected?</h3>
+    <div class="card"><span class="tag">K-MEANS</span><h3>Which part is damaged?</h3>
       <p>It puts pixels with similar colors into <i>K</i> groups. Green leaf, spots, and background end up in different groups.</p>
       <p class="note">Steps: pick K centers. Put each point in the group of the nearest center. Move each center to the middle of its group. Repeat.</p></div>
     <div class="card"><span class="tag">LINEAR REGRESSION</span><h3>How much is damaged?</h3>
@@ -141,30 +149,18 @@
       <p class="note">Example with K = 5: if 4 of the 5 closest leaves have rust level 1, the answer is rust level 1.</p></div>
     <div class="card"><span class="tag">Q-LEARNING</span><h3>What is the best action?</h3>
       <p>An agent learns by trying actions and getting rewards. A table (the Q-table) keeps a score for each action in each situation.</p>
-      <p class="note">It also thinks about the future, not only the next reward. In my project, the situation is the diagnosis, and the actions are things like “keep watching” or “apply treatment.” I will set the rewards with simple rules in Phase 3.</p></div>
+      <p class="note">It also thinks about the future, not only the next reward. In my project, the situation is the diagnosis, and the actions are things like “keep watching” or “apply treatment.” I will set the rewards with simple rules.</p></div>
   </div>
 </div></section>
 
-<section id="next" class="dark"><div class="wrap">
-  <h2>Next steps: the CRISP-ML phases</h2>
-  <div class="phases">
-    <div class="phase now"><b>Phase 1 · Done</b><br>Business and data understanding</div>
-    <div class="phase"><b>Phase 2</b><br>Data engineering: clean and prepare the photos, and take my own arabica photos</div>
-    <div class="phase"><b>Phase 3</b><br>Model engineering: build and test the models</div>
-    <div class="phase"><b>Phase 4</b><br>Evaluation: check how well they work</div>
-    <div class="phase"><b>Phase 5</b><br>Deployment: put the web app online</div>
-    <div class="phase"><b>Phase 6</b><br>Monitoring: keep it working with new photos</div>
-  </div>
-</div></section>
-
-<section id="sources"><div class="wrap">
-  <h2>Sources and license</h2>
+<section id="references"><div class="wrap">
+  <h2>References</h2>
   <p><b>Dataset:</b> Parraga-Alava, Cusme, Loor &amp; Santander (2019). <i>RoCoLe.</i> Mendeley Data, V2, doi: <a href="https://doi.org/10.17632/c5yvn32dzg.2">10.17632/c5yvn32dzg.2</a>.</p>
   <p><b>License:</b> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. I can use and change the data if I give credit to the authors, link to the license, and say what I changed. This does not mean the authors support this project.</p>
 </div></section>
 
 <footer><div class="wrap">
-  Ojo al Cafetal · Phase 1 · CRISP-ML · Álvaro Javier Cano · Machine Learning, UDEC
+  Ojo al Cafetal · Álvaro Javier Cano · Machine Learning, UDEC · Final project
 </div></footer>
 
 </body>
