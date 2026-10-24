@@ -131,21 +131,17 @@
   <div class="grid">
     <div class="card"><span class="tag">K-MEANS</span><h3>Which part is affected?</h3>
       <p>It groups pixels with similar color into <i>K</i> groups. Healthy green, spots, and background fall into different groups.</p>
-      <p class="note">Steps: pick K centers, assign each point to the nearest center, move each center to the mean of its group, repeat.</p>
-      <div class="formula">distance² = (x₁−c₁)² + (x₂−c₂)² + …</div></div>
+      <p class="note">Steps: pick K centers, assign each point to the nearest center, move each center to the mean of its group, repeat.</p></div>
     <div class="card"><span class="tag">LINEAR REGRESSION</span><h3>What percent is damaged?</h3>
-      <p>It fits a line that predicts a number. For example, the percent of leaf damage from the area of the spots.</p>
-      <div class="formula">ŷ = b₀ + b₁·x</div></div>
+      <p>It fits a line that predicts a number. For example, the percent of leaf damage from the area of the spots.</p></div>
     <div class="card"><span class="tag">LOGISTIC REGRESSION</span><h3>Healthy or sick?</h3>
-      <p>It gives a probability between 0 and 1. If it is above 0.5, the leaf is sick.</p>
-      <div class="formula">p = 1 / (1 + e^−(b₀ + b₁·x))</div></div>
+      <p>It gives a probability between 0 and 1. If it is above 0.5, the leaf is sick.</p></div>
     <div class="card"><span class="tag">KNN</span><h3>Which disease is it?</h3>
       <p>K-Nearest Neighbors. It finds the <i>K</i> most similar leaves it knows and chooses the disease that appears most.</p>
       <p class="note">Example with K = 5: if 4 of the 5 nearest leaves have rust level 1, the answer is rust level 1.</p></div>
     <div class="card"><span class="tag">Q-LEARNING</span><h3>What is the best action?</h3>
       <p>An agent learns by trying actions and getting rewards. A table (Q-table) stores how good each action is in each state.</p>
-      <div class="formula">Q(s,a) ← Q(s,a) + α·[ r + γ·max Q(s′,a′) − Q(s,a) ]</div>
-      <p class="note">α = how fast it learns. γ = how much the future matters. r = reward. In this project, the state is the diagnosis and the actions are things like “keep watching” or “apply treatment.” I will define the rewards as simple rules in Phase 3.</p></div>
+      <p class="note">It also thinks about the future, not only the next reward. In this project, the state is the diagnosis and the actions are things like “keep watching” or “apply treatment.” I will define the rewards as simple rules in Phase 3.</p></div>
   </div>
 </div></section>
 
