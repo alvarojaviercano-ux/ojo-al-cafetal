@@ -28,54 +28,54 @@
 <header class="hero"><div class="wrap">
   <p class="kicker">Phase 1 · Business and data understanding · CRISP-ML</p>
   <h1>Ojo al Cafetal</h1>
-  <p class="sub">Finding coffee leaf diseases from a photo.</p>
+  <p class="sub">Spot coffee leaf diseases from a photo.</p>
   <p class="by">Álvaro Javier Cano · Machine Learning · UDEC · Final project</p>
 </div></header>
 
 <section id="problem"><div class="wrap">
-  <h2>The problem: diseases are found too late</h2>
-  <p class="lead">Coffee is part of Colombia’s identity. When a coffee plant gets sick, the damage shows first on the leaf.</p>
+  <h2>The problem: we find diseases too late</h2>
+  <p class="lead">Coffee is a big part of Colombia. When a coffee plant gets sick, you see it on the leaf first.</p>
   <div class="grid">
-    <div class="card"><h3>Leaf damage</h3><p>Rust and red spider mite spot and weaken the leaf.</p></div>
-    <div class="card"><h3>Little expert help</h3><p>Many farmers do not have an expert nearby to check each plant.</p></div>
-    <div class="card"><h3>Late detection</h3><p>If the disease is found late, it spreads and the farmer loses production.</p></div>
+    <div class="card"><h3>Leaf damage</h3><p>Rust and red spider mites leave spots and make the leaf weak.</p></div>
+    <div class="card"><h3>Little expert help</h3><p>Many farmers have no expert close by to check every plant.</p></div>
+    <div class="card"><h3>Late detection</h3><p>When we find the disease late, it spreads and the farmer loses coffee.</p></div>
   </div>
   <div class="callout"><b>Guiding question:</b> can we find the disease with just one photo?</div>
-  <p class="note">The name comes from a Colombian saying: <i>“ojo al cafetal”</i> means “keep an eye on the coffee farm.”</p>
+  <p class="note">The name comes from a Colombian saying. “Ojo al cafetal” means “keep an eye on the coffee farm.”</p>
 </div></section>
 
 <section id="solution" class="alt"><div class="wrap">
   <h2>The solution</h2>
-  <p class="lead">A simple web page that checks a leaf photo and tells the farmer what to do.</p>
+  <p class="lead">A simple web page. It checks a photo of a leaf and tells the farmer what to do.</p>
   <ol class="steps">
-    <li><b>Upload.</b> The user sends a photo of one leaf, from a phone.</li>
-    <li><b>Analyze.</b> The model checks the leaf. It looks at color and spots.</li>
-    <li><b>Receive.</b> The user gets a clear result: the disease, how serious it is, and what to do.</li>
+    <li><b>Upload.</b> The user takes a photo of one leaf with a phone and sends it.</li>
+    <li><b>Analyze.</b> The model looks at the leaf. It checks the color and the spots.</li>
+    <li><b>Receive.</b> The user gets a clear answer: which disease it is, how bad it is, and what to do.</li>
   </ol>
-  <div class="callout" style="border-color:var(--green);background:#E8F2EA"><b>Business goal:</b> help the coffee farmer decide in time, with a simple web tool.</div>
+  <div class="callout" style="border-color:var(--green);background:#E8F2EA"><b>Business goal:</b> help the coffee farmer act on time, with a simple web tool.</div>
 
   <h3 style="margin-top:34px;margin-bottom:12px">Key questions and the model for each</h3>
   <table>
     <tr><th>Question</th><th>Possible model</th></tr>
     <tr><td>Is the leaf healthy or sick?</td><td>Logistic Regression</td></tr>
-    <tr><td>Which disease does it have?</td><td>KNN</td></tr>
-    <tr><td>Which part of the leaf is affected?</td><td>K-Means</td></tr>
-    <tr><td>What percent is damaged?</td><td>Linear Regression</td></tr>
-    <tr><td>What action is best?</td><td>Reinforcement Learning (Q-Learning)</td></tr>
+    <tr><td>Which disease is it?</td><td>KNN</td></tr>
+    <tr><td>Which part of the leaf is damaged?</td><td>K-Means</td></tr>
+    <tr><td>How much is damaged?</td><td>Linear Regression</td></tr>
+    <tr><td>What is the best action?</td><td>Reinforcement Learning (Q-Learning)</td></tr>
   </table>
-  <p class="note" style="margin-top:10px">These are first ideas. I will choose and test the models in Phase 3.</p>
+  <p class="note" style="margin-top:10px">These are my first ideas. I will pick and test the models in Phase 3.</p>
 </div></section>
 
 <section id="data" class="dark"><div class="wrap">
   <h2>The data: the RoCoLe dataset</h2>
-  <p class="lead">A public dataset of robusta coffee leaves. An expert checked the labels. It includes rust levels based on the percent of leaf covered by spots.</p>
+  <p class="lead">A public dataset of robusta coffee leaves. An expert checked the labels. It also shows rust levels, based on how much of the leaf has spots.</p>
   <div class="stats">
     <div class="stat"><b>1,560</b><span>leaf images</span></div>
     <div class="stat"><b>390</b><span>plants</span></div>
     <div class="stat"><b>6</b><span>classes</span></div>
     <div class="stat"><b>5 MP</b><span>phone photos (JPEG)</span></div>
   </div>
-  <h3 style="margin-bottom:6px">There are many more healthy leaves than sick ones</h3>
+  <h3 style="margin-bottom:6px">There are many more healthy leaves than sick leaves</h3>
   <div class="bars" style="color:var(--dark)">
     <div class="bar" style="color:var(--cream)"><span>Healthy</span><i class="h" style="width:100%"></i><span>791</span></div>
     <div class="bar" style="color:var(--cream)"><span>Rust level 1</span><i style="width:43.5%"></i><span>344</span></div>
@@ -84,64 +84,64 @@
     <div class="bar" style="color:var(--cream)"><span>Rust level 3</span><i style="width:7.8%"></i><span>62</span></div>
     <div class="bar" style="color:var(--cream)"><span>Rust level 4</span><i style="width:3.8%"></i><span>30</span></div>
   </div>
-  <p><b style="color:var(--orange)">There are about 26 times more healthy leaves than rust level 4 leaves.</b> The model could learn to always say “healthy.” I will deal with this in the next phases.</p>
-  <p class="note" style="color:#D9CBBB">Rust level by leaf covered: 1 = 1–5%, 2 = 6–20%, 3 = 21–50%, 4 = more than 50%.</p>
+  <p><b style="color:var(--orange)">There are about 26 times more healthy leaves than rust level 4 leaves.</b> The model could learn to always say “healthy.” I will fix this in the next phases.</p>
+  <p class="note" style="color:#D9CBBB">Rust level, by how much of the leaf has spots: 1 = 1–5%, 2 = 6–20%, 3 = 21–50%, 4 = more than 50%.</p>
 </div></section>
 
 <section id="quality"><div class="wrap">
-  <h2>Data quality: what is good and what to watch</h2>
+  <h2>Data quality: the good and the bad</h2>
   <div class="grid">
     <div class="card">
       <span class="tag">GOOD</span>
       <ul>
-        <li>Labels checked by an expert</li>
-        <li>Photos taken with a phone, like real use</li>
-        <li>Rust severity levels included</li>
+        <li>An expert checked the labels</li>
+        <li>Photos taken with a phone, just like real use</li>
+        <li>It has rust levels (how bad the rust is)</li>
         <li>Open license: CC BY 4.0</li>
       </ul>
     </div>
     <div class="card">
-      <span class="tag warn">WATCH OUT</span>
+      <span class="tag warn">LIMITS</span>
       <ul>
-        <li>Robusta coffee, but Colombia grows mostly arabica</li>
-        <li>The data is not from Colombia</li>
-        <li>Classes are not balanced</li>
-        <li>Not tested yet with real field photos</li>
-        <li>I must credit the authors and say if I change the data</li>
+        <li>It is robusta coffee, but Colombia grows mostly arabica</li>
+        <li>The photos are not from Colombia</li>
+        <li>The classes are not balanced</li>
+        <li>I have not tested it with real photos from the field yet</li>
+        <li>I must give credit to the authors, and say if I change the data</li>
       </ul>
     </div>
   </div>
-  <div class="callout"><b>My plan:</b> use RoCoLe as a base, and collect my own photos of Colombian arabica leaves (for example Castillo and Caturra) to test the model in real conditions. I will state these limits clearly in the final report.</div>
+  <div class="callout"><b>My plan:</b> I will use RoCoLe as a base. Then I will take my own photos of Colombian arabica leaves (for example Castillo and Caturra) to test the model in real conditions. I will explain these limits in the final report.</div>
 </div></section>
 
 <section id="risks" class="alt"><div class="wrap">
-  <h2>Feasibility and risks</h2>
-  <p class="lead">The project is feasible. I already use Flask, scikit-learn, and Render in my earlier modules, so I do not need new tools.</p>
+  <h2>Can I do it? Feasibility and risks</h2>
+  <p class="lead">Yes, I can do it. I already use Flask, scikit-learn, and Render in my earlier modules, so I do not need new tools.</p>
   <table>
     <tr><th>Risk</th><th>What I will do</th></tr>
-    <tr><td>Classes are not balanced</td><td>Group classes: healthy, mild rust, severe rust, and mite.</td></tr>
-    <tr><td>Data is robusta, not arabica, and not from Colombia</td><td>Say it clearly as a limit, and test with my own photos of arabica leaves.</td></tr>
-    <tr><td>Photos can be very different</td><td>Ask for one leaf, good light, and a plain background.</td></tr>
+    <tr><td>The classes are not balanced</td><td>I will group them: healthy, mild rust, severe rust, and mite.</td></tr>
+    <tr><td>The data is robusta, not arabica, and not from Colombia</td><td>I will say it is a limit of the model. I will also test it with my own photos of arabica leaves.</td></tr>
+    <tr><td>Photos can be very different</td><td>The web page will ask for one leaf, good light, and a plain background.</td></tr>
   </table>
 </div></section>
 
 <section id="models"><div class="wrap">
   <h2>Theory: the models from our course</h2>
-  <p class="lead">Each model can answer a different question about a leaf. Here is how each one works, in simple words.</p>
+  <p class="lead">Each model answers a different question about a leaf. Here is how each one works, in simple words.</p>
   <div class="grid">
     <div class="card"><span class="tag">K-MEANS</span><h3>Which part is affected?</h3>
-      <p>It groups pixels with similar color into <i>K</i> groups. Healthy green, spots, and background fall into different groups.</p>
-      <p class="note">Steps: pick K centers, assign each point to the nearest center, move each center to the mean of its group, repeat.</p></div>
-    <div class="card"><span class="tag">LINEAR REGRESSION</span><h3>What percent is damaged?</h3>
-      <p>It fits a line that predicts a number. For example, the percent of leaf damage from the area of the spots.</p></div>
+      <p>It puts pixels with similar colors into <i>K</i> groups. Green leaf, spots, and background end up in different groups.</p>
+      <p class="note">Steps: pick K centers. Put each point in the group of the nearest center. Move each center to the middle of its group. Repeat.</p></div>
+    <div class="card"><span class="tag">LINEAR REGRESSION</span><h3>How much is damaged?</h3>
+      <p>It draws a line to predict a number. For example, it can predict the percent of damage from the size of the spots.</p></div>
     <div class="card"><span class="tag">LOGISTIC REGRESSION</span><h3>Healthy or sick?</h3>
-      <p>It gives a probability between 0 and 1. If it is above 0.5, the leaf is sick.</p></div>
+      <p>It gives a number between 0 and 1. If the number is above 0.5, we say the leaf is sick.</p></div>
     <div class="card"><span class="tag">KNN</span><h3>Which disease is it?</h3>
-      <p>K-Nearest Neighbors. It finds the <i>K</i> most similar leaves it knows and chooses the disease that appears most.</p>
-      <p class="note">Example with K = 5: if 4 of the 5 nearest leaves have rust level 1, the answer is rust level 1.</p></div>
+      <p>K-Nearest Neighbors. It finds the <i>K</i> leaves most like the new one, and picks the disease that shows up the most.</p>
+      <p class="note">Example with K = 5: if 4 of the 5 closest leaves have rust level 1, the answer is rust level 1.</p></div>
     <div class="card"><span class="tag">Q-LEARNING</span><h3>What is the best action?</h3>
-      <p>An agent learns by trying actions and getting rewards. A table (Q-table) stores how good each action is in each state.</p>
-      <p class="note">It also thinks about the future, not only the next reward. In this project, the state is the diagnosis and the actions are things like “keep watching” or “apply treatment.” I will define the rewards as simple rules in Phase 3.</p></div>
+      <p>An agent learns by trying actions and getting rewards. A table (the Q-table) keeps a score for each action in each situation.</p>
+      <p class="note">It also thinks about the future, not only the next reward. In my project, the situation is the diagnosis, and the actions are things like “keep watching” or “apply treatment.” I will set the rewards with simple rules in Phase 3.</p></div>
   </div>
 </div></section>
 
@@ -149,10 +149,10 @@
   <h2>Next steps: the CRISP-ML phases</h2>
   <div class="phases">
     <div class="phase now"><b>Phase 1 · Done</b><br>Business and data understanding</div>
-    <div class="phase"><b>Phase 2</b><br>Data engineering: clean and prepare the photos, and collect my own arabica photos</div>
+    <div class="phase"><b>Phase 2</b><br>Data engineering: clean and prepare the photos, and take my own arabica photos</div>
     <div class="phase"><b>Phase 3</b><br>Model engineering: build and test the models</div>
-    <div class="phase"><b>Phase 4</b><br>Evaluation: measure how well they work</div>
-    <div class="phase"><b>Phase 5</b><br>Deployment: publish the web app</div>
+    <div class="phase"><b>Phase 4</b><br>Evaluation: check how well they work</div>
+    <div class="phase"><b>Phase 5</b><br>Deployment: put the web app online</div>
     <div class="phase"><b>Phase 6</b><br>Monitoring: keep it working with new photos</div>
   </div>
 </div></section>
@@ -160,7 +160,7 @@
 <section id="sources"><div class="wrap">
   <h2>Sources and license</h2>
   <p><b>Dataset:</b> Parraga-Alava, Cusme, Loor &amp; Santander (2019). <i>RoCoLe.</i> Mendeley Data, V2, doi: <a href="https://doi.org/10.17632/c5yvn32dzg.2">10.17632/c5yvn32dzg.2</a>.</p>
-  <p><b>License:</b> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. The data can be used and changed if the authors are credited, a link to the license is given, and changes are indicated. This does not imply that the authors endorse this project.</p>
+  <p><b>License:</b> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. I can use and change the data if I give credit to the authors, link to the license, and say what I changed. This does not mean the authors support this project.</p>
 </div></section>
 
 <footer><div class="wrap">
