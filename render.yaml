@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: ojo-al-cafetal
+    runtime: static
+    staticPublishPath: .
+    pullRequestPreviewsEnabled: false
