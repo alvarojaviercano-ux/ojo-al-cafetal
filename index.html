@@ -18,6 +18,8 @@
   <a href="#problem">Problem</a>
   <a href="#objectives">Objectives</a>
   <a href="#framework">Reference framework</a>
+  <a href="#models">Models</a>
+  <a href="#data">Data</a>
   <a href="#references">References</a>
 </div></nav>
 
@@ -70,10 +72,39 @@
 
 <section id="framework"><div class="wrap">
   <h2>Reference framework</h2>
-  <p class="lead">The data I will use, and the models from our course.</p>
+  <p class="lead">The work and ideas my project is based on.</p>
 
-  <h3 style="margin-bottom:12px">Key questions and the model for each</h3>
+  <h3 style="margin-bottom:12px">1. Background: related work</h3>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div class="card"><span class="tag">SMARTPHONE APP</span><h3>Manso et al.</h3>
+      <p>They built a phone app to find coffee leaf miner and rust. It cuts the leaf from the background, finds the damaged area (with thresholds or k-means), and then classifies the damage. It also gives the percent of leaf damaged. They got about 96% accuracy. A white background worked best.</p>
+      <p class="note"><b>What I take from it:</b> k-means for the damaged area, a percent of damage, and a plain background for the photo.</p></div>
+    <div class="card"><span class="tag">RUST SEVERITY</span><h3>Zuñiga Cajas et al. (2025)</h3>
+      <p>They trained thirteen convolutional neural networks to tell how severe the rust is. They say it is a good option when there is little data, but it does not work well yet on other datasets.</p>
+      <p class="note"><b>What I take from it:</b> severity matters, and I must test the model on photos from other sources.</p></div>
+    <div class="card"><span class="tag">DATASET</span><h3>RoCoLe (2019)</h3>
+      <p>Parraga-Alava and colleagues made a public dataset of robusta leaves, with an expert’s labels and rust levels.</p>
+      <p class="note"><b>What I take from it:</b> this is my main data.</p></div>
+    <div class="card"><span class="tag">DATASET</span><h3>JMuBEN</h3>
+      <p>A public dataset of arabica leaves with 22,591 images. It has rust, Cercospora, Phoma, miner, and healthy leaves.</p>
+      <p class="note"><b>What I take from it:</b> a way to test with arabica. I must check its license first.</p></div>
+  </div>
+
+  <h3 style="margin:34px 0 12px">2. Conceptual framework</h3>
   <table>
+    <tr><th>Term</th><th>What it means</th></tr>
+    <tr><td>Coffee leaf rust</td><td>A fungus disease. It makes orange spots on the leaf. I measure it in four levels, by how much of the leaf has spots.</td></tr>
+    <tr><td>Red spider mite</td><td>A very small pest that damages the leaf.</td></tr>
+    <tr><td>Robusta and arabica</td><td>Two types of coffee. My data is robusta, but Colombia grows mostly arabica.</td></tr>
+    <tr><td>Castillo and Caturra</td><td>Arabica varieties grown in Colombia. Cenicafé reports that the Castillo varieties resist rust. Caturra is one I want to photograph.</td></tr>
+    <tr><td>Class</td><td>A group in the data, like “healthy” or “rust level 1”.</td></tr>
+  </table>
+</div></section>
+
+<section id="models" class="alt"><div class="wrap">
+  <h2>3. Theoretical framework: the models</h2>
+  <p class="lead">Each model from our course answers a different question about a leaf. Here is how each one works, in simple words.</p>
+  <table style="margin-bottom:24px">
     <tr><th>Question</th><th>Possible model</th></tr>
     <tr><td>Is the leaf healthy or sick?</td><td>Logistic Regression</td></tr>
     <tr><td>Which disease is it?</td><td>KNN</td></tr>
@@ -81,11 +112,25 @@
     <tr><td>How much is damaged?</td><td>Linear Regression</td></tr>
     <tr><td>What is the best action?</td><td>Reinforcement Learning (Q-Learning)</td></tr>
   </table>
-  <p class="note" style="margin-top:10px">These are my first ideas. I will pick and test the models later.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">K-MEANS</span><h3>Which part is damaged?</h3>
+      <p>It puts pixels with similar colors into <i>K</i> groups. Green leaf, spots, and background end up in different groups.</p>
+      <p class="note">Steps: pick K centers. Put each point in the group of the nearest center. Move each center to the middle of its group. Repeat.</p></div>
+    <div class="card"><span class="tag">LINEAR REGRESSION</span><h3>How much is damaged?</h3>
+      <p>It draws a line to predict a number. For example, it can predict the percent of damage from the size of the spots.</p></div>
+    <div class="card"><span class="tag">LOGISTIC REGRESSION</span><h3>Healthy or sick?</h3>
+      <p>It gives a number between 0 and 1. If the number is above 0.5, we say the leaf is sick.</p></div>
+    <div class="card"><span class="tag">KNN</span><h3>Which disease is it?</h3>
+      <p>K-Nearest Neighbors. It finds the <i>K</i> leaves most like the new one, and picks the disease that shows up the most.</p>
+      <p class="note">Example with K = 5: if 4 of the 5 closest leaves have rust level 1, the answer is rust level 1.</p></div>
+    <div class="card"><span class="tag">Q-LEARNING</span><h3>What is the best action?</h3>
+      <p>An agent learns by trying actions and getting rewards. A table (the Q-table) keeps a score for each action in each situation.</p>
+      <p class="note">It also thinks about the future, not only the next reward. In my project, the situation is the diagnosis, and the actions are things like “keep watching” or “apply treatment.” I will set the rewards with simple rules.</p></div>
+  </div>
 </div></section>
 
 <section id="data" class="dark"><div class="wrap">
-  <h2>The data: the RoCoLe dataset</h2>
+  <h2>4. The data I use: RoCoLe</h2>
   <p class="lead">A public dataset of robusta coffee leaves. An expert checked the labels. It also shows rust levels, based on how much of the leaf has spots.</p>
   <div class="stats">
     <div class="stat"><b>1,560</b><span>leaf images</span></div>
@@ -133,9 +178,129 @@
   <p class="note">Another risk: photos can be very different. The web page will ask for one leaf, good light, and a plain background.</p>
 </div></section>
 
+<section id="references"><div class="wrap">
+  <h2>References</h2>
+  <ul>
+    <li>Parraga-Alava, J., Cusme, K., Loor, A. &amp; Santander, E. (2019). <i>RoCoLe: A robusta coffee leaf images dataset for evaluation of machine learning based methods in plant diseases recognition.</i> Data in Brief. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6727496/">Article</a> · Dataset: Mendeley Data, V2, doi <a href="https://doi.org/10.17632/c5yvn32dzg.2">10.17632/c5yvn32dzg.2</a>.</li>
+    <li>Manso, G. L., Knidel, H., Krohling, R. A. &amp; Ventura, J. A. <i>A smartphone application to detection and classification of coffee leaf miner and coffee leaf rust.</i> arXiv:1904.00742. <a href="https://arxiv.org/abs/1904.00742">arxiv.org/abs/1904.00742</a></li>
+    <li>Zuñiga Cajas, J. J., Peña Ramos, O. D., Lasso, E., Avelino, J., Corrales, J. C. &amp; Figueroa, C. (2025). <i>Estimating the severity of coffee leaf rust using deep learning and image processing.</i> Inteligencia Artificial, 28(76). <a href="https://journal.iberamia.org/index.php/intartif/article/view/1833">Link</a></li>
+    <li>Jepkoech, J., Kenduiywo, B., Mugo, D. &amp; Chebet, E. <i>JMuBEN (Arabica coffee leaf dataset).</i> Mendeley Data, doi <a href="https://doi.org/10.17632/t2r6rszp5c.1">10.17632/t2r6rszp5c.1</a>.</li>
+    <li>Cenicafé. <i>Variedades Castil<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ojo al Cafetal – Research</title>
+<meta name="description" content="Final project, Machine Learning: spot coffee leaf diseases from a photo.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Domine:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav><div class="wrap">
+  <b>Ojo al Cafetal</b>
+  <a href="#problem">Problem</a>
+  <a href="#objectives">Objectives</a>
+  <a href="#framework">Reference framework</a>
+  <a href="#models">Models</a>
+  <a href="#data">Data</a>
+  <a href="#references">References</a>
+  <a href="https://ojo-al-cafetal-app.onrender.com" style="color:#E39A55;font-weight:700">Try the app →</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <p class="kicker">Project title</p>
+  <h1>Ojo al Cafetal</h1>
+  <p class="sub">Spot coffee leaf diseases from a photo.</p>
+  <p class="by">Álvaro Javier Cano · Machine Learning · UDEC · Final project</p>
+  <p style="margin-top:22px"><a class="btn" href="https://ojo-al-cafetal-app.onrender.com">Try the app →</a></p>
+</div></header>
+
+<section id="problem"><div class="wrap">
+  <h2>Problem statement and justification</h2>
+  <p class="lead">Coffee is a big part of Colombia. When a coffee plant gets sick, you see it on the leaf first. But we often find the disease too late.</p>
+  <div class="grid">
+    <div class="card"><h3>Leaf damage</h3><p>Rust and red spider mites leave spots and make the leaf weak.</p></div>
+    <div class="card"><h3>Little expert help</h3><p>Many farmers have no expert close by to check every plant.</p></div>
+    <div class="card"><h3>Late detection</h3><p>When we find the disease late, it spreads and the farmer loses coffee.</p></div>
+  </div>
+  <div class="callout"><b>Guiding question:</b> can we find the disease with just one photo?</div>
+
+  <h3 style="margin:34px 0 12px">The solution</h3>
+  <p class="lead" style="margin-bottom:16px">A simple web page. It checks a photo of a leaf and tells the farmer what to do.</p>
+  <ol class="steps">
+    <li><b>Upload.</b> The user takes a photo of one leaf with a phone and sends it.</li>
+    <li><b>Analyze.</b> The model looks at the leaf. It checks the color and the spots.</li>
+    <li><b>Receive.</b> The user gets a clear answer: which disease it is, how bad it is, and what to do.</li>
+  </ol>
+
+  <h3 style="margin:34px 0 12px">Why it is worth doing</h3>
+  <ul>
+    <li>It helps the farmer act on time and lose less coffee.</li>
+    <li>It only needs a phone and the internet. No expert visit is needed for a first check.</li>
+    <li>I can do it: I already use Flask, scikit-learn, and Render in my earlier modules, so I do not need new tools.</li>
+  </ul>
+  <p class="note" style="margin-top:14px">The name comes from a Colombian saying. “Ojo al cafetal” means “keep an eye on the coffee farm.”</p>
+</div></section>
+
+<section id="objectives" class="alt"><div class="wrap">
+  <h2>Project objectives</h2>
+  <div class="callout" style="border-color:var(--green);background:#E8F2EA"><b>General objective:</b> build a web app that finds coffee leaf diseases from a photo, so farmers can act on time.</div>
+  <h3 style="margin:26px 0 12px">Specific objectives</h3>
+  <ol class="steps">
+    <li>Check that the RoCoLe data is good enough for the project: its quality, its use, and its size.</li>
+    <li>Prepare the photos: clean them, group the classes, and add my own photos of arabica leaves.</li>
+    <li>Build and compare the models: K-Means, Linear Regression, Logistic Regression, KNN, and Q-Learning.</li>
+    <li>Measure how well the models work, with accuracy, precision, and recall. Test them with real photos.</li>
+    <li>Put the web app online on Render, so farmers can use it from a phone.</li>
+  </ol>
+</div></section>
+
+<section id="framework"><div class="wrap">
+  <h2>Reference framework</h2>
+  <p class="lead">The work and ideas my project is based on.</p>
+
+  <h3 style="margin-bottom:12px">1. Background: related work</h3>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(300px,1fr))">
+    <div class="card"><span class="tag">SMARTPHONE APP</span><h3>Manso et al.</h3>
+      <p>They built a phone app to find coffee leaf miner and rust. It cuts the leaf from the background, finds the damaged area (with thresholds or k-means), and then classifies the damage. It also gives the percent of leaf damaged. They got about 96% accuracy. A white background worked best.</p>
+      <p class="note"><b>What I take from it:</b> k-means for the damaged area, a percent of damage, and a plain background for the photo.</p></div>
+    <div class="card"><span class="tag">RUST SEVERITY</span><h3>Zuñiga Cajas et al. (2025)</h3>
+      <p>They trained thirteen convolutional neural networks to tell how severe the rust is. They say it is a good option when there is little data, but it does not work well yet on other datasets.</p>
+      <p class="note"><b>What I take from it:</b> severity matters, and I must test the model on photos from other sources.</p></div>
+    <div class="card"><span class="tag">DATASET</span><h3>RoCoLe (2019)</h3>
+      <p>Parraga-Alava and colleagues made a public dataset of robusta leaves, with an expert’s labels and rust levels.</p>
+      <p class="note"><b>What I take from it:</b> this is my main data.</p></div>
+    <div class="card"><span class="tag">DATASET</span><h3>JMuBEN</h3>
+      <p>A public dataset of arabica leaves with 22,591 images. It has rust, Cercospora, Phoma, miner, and healthy leaves.</p>
+      <p class="note"><b>What I take from it:</b> a way to test with arabica. I must check its license first.</p></div>
+  </div>
+
+  <h3 style="margin:34px 0 12px">2. Conceptual framework</h3>
+  <table>
+    <tr><th>Term</th><th>What it means</th></tr>
+    <tr><td>Coffee leaf rust</td><td>A fungus disease. It makes orange spots on the leaf. I measure it in four levels, by how much of the leaf has spots.</td></tr>
+    <tr><td>Red spider mite</td><td>A very small pest that damages the leaf.</td></tr>
+    <tr><td>Robusta and arabica</td><td>Two types of coffee. My data is robusta, but Colombia grows mostly arabica.</td></tr>
+    <tr><td>Castillo and Caturra</td><td>Arabica varieties grown in Colombia. Cenicafé reports that the Castillo varieties resist rust. Caturra is one I want to photograph.</td></tr>
+    <tr><td>Class</td><td>A group in the data, like “healthy” or “rust level 1”.</td></tr>
+  </table>
+</div></section>
+
 <section id="models" class="alt"><div class="wrap">
-  <h2>The models from our course</h2>
-  <p class="lead">Each model answers a different question about a leaf. Here is how each one works, in simple words.</p>
+  <h2>3. Theoretical framework: the models</h2>
+  <p class="lead">Each model from our course answers a different question about a leaf. Here is how each one works, in simple words.</p>
+  <table style="margin-bottom:24px">
+    <tr><th>Question</th><th>Possible model</th></tr>
+    <tr><td>Is the leaf healthy or sick?</td><td>Logistic Regression</td></tr>
+    <tr><td>Which disease is it?</td><td>KNN</td></tr>
+    <tr><td>Which part of the leaf is damaged?</td><td>K-Means</td></tr>
+    <tr><td>How much is damaged?</td><td>Linear Regression</td></tr>
+    <tr><td>What is the best action?</td><td>Reinforcement Learning (Q-Learning)</td></tr>
+  </table>
   <div class="grid">
     <div class="card"><span class="tag">K-MEANS</span><h3>Which part is damaged?</h3>
       <p>It puts pixels with similar colors into <i>K</i> groups. Green leaf, spots, and background end up in different groups.</p>
@@ -153,10 +318,75 @@
   </div>
 </div></section>
 
+<section id="data" class="dark"><div class="wrap">
+  <h2>4. The data I use: RoCoLe</h2>
+  <p class="lead">A public dataset of robusta coffee leaves. An expert checked the labels. It also shows rust levels, based on how much of the leaf has spots.</p>
+  <div class="stats">
+    <div class="stat"><b>1,560</b><span>leaf images</span></div>
+    <div class="stat"><b>390</b><span>plants</span></div>
+    <div class="stat"><b>6</b><span>classes</span></div>
+    <div class="stat"><b>5 MP</b><span>phone photos (JPEG)</span></div>
+  </div>
+  <h3 style="margin-bottom:6px">There are many more healthy leaves than sick leaves</h3>
+  <div class="bars" style="color:var(--dark)">
+    <div class="bar" style="color:var(--cream)"><span>Healthy</span><i class="h" style="width:100%"></i><span>791</span></div>
+    <div class="bar" style="color:var(--cream)"><span>Rust level 1</span><i style="width:43.5%"></i><span>344</span></div>
+    <div class="bar" style="color:var(--cream)"><span>Red spider mite</span><i class="m" style="width:21.1%"></i><span>167</span></div>
+    <div class="bar" style="color:var(--cream)"><span>Rust level 2</span><i style="width:21%"></i><span>166</span></div>
+    <div class="bar" style="color:var(--cream)"><span>Rust level 3</span><i style="width:7.8%"></i><span>62</span></div>
+    <div class="bar" style="color:var(--cream)"><span>Rust level 4</span><i style="width:3.8%"></i><span>30</span></div>
+  </div>
+  <p><b style="color:var(--orange)">There are about 26 times more healthy leaves than rust level 4 leaves.</b> The model could learn to always say “healthy.” I will fix this by grouping the classes: healthy, mild rust, severe rust, and mite.</p>
+  <p class="note" style="color:#D9CBBB">Rust level, by how much of the leaf has spots: 1 = 1–5%, 2 = 6–20%, 3 = 21–50%, 4 = more than 50%.</p>
+</div></section>
+
+<section id="quality"><div class="wrap">
+  <h2>Data quality: the good and the bad</h2>
+  <div class="grid">
+    <div class="card">
+      <span class="tag">GOOD</span>
+      <ul>
+        <li>An expert checked the labels</li>
+        <li>Photos taken with a phone, just like real use</li>
+        <li>It has rust levels (how bad the rust is)</li>
+        <li>Open license: CC BY 4.0</li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="tag warn">LIMITS</span>
+      <ul>
+        <li>It is robusta coffee, but Colombia grows mostly arabica</li>
+        <li>The photos are not from Colombia</li>
+        <li>The classes are not balanced</li>
+        <li>I have not tested it with real photos from the field yet</li>
+        <li>I must give credit to the authors, and say if I change the data</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout"><b>My plan:</b> I will use RoCoLe as a base. Then I will take my own photos of Colombian arabica leaves (for example Castillo and Caturra) to test the model in real conditions. I will explain these limits in the final report.</div>
+  <p class="note">Another risk: photos can be very different. The web page will ask for one leaf, good light, and a plain background.</p>
+</div></section>
+
 <section id="references"><div class="wrap">
   <h2>References</h2>
-  <p><b>Dataset:</b> Parraga-Alava, Cusme, Loor &amp; Santander (2019). <i>RoCoLe.</i> Mendeley Data, V2, doi: <a href="https://doi.org/10.17632/c5yvn32dzg.2">10.17632/c5yvn32dzg.2</a>.</p>
-  <p><b>License:</b> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. I can use and change the data if I give credit to the authors, link to the license, and say what I changed. This does not mean the authors support this project.</p>
+  <ul>
+    <li>Parraga-Alava, J., Cusme, K., Loor, A. &amp; Santander, E. (2019). <i>RoCoLe: A robusta coffee leaf images dataset for evaluation of machine learning based methods in plant diseases recognition.</i> Data in Brief. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6727496/">Article</a> · Dataset: Mendeley Data, V2, doi <a href="https://doi.org/10.17632/c5yvn32dzg.2">10.17632/c5yvn32dzg.2</a>.</li>
+    <li>Manso, G. L., Knidel, H., Krohling, R. A. &amp; Ventura, J. A. <i>A smartphone application to detection and classification of coffee leaf miner and coffee leaf rust.</i> arXiv:1904.00742. <a href="https://arxiv.org/abs/1904.00742">arxiv.org/abs/1904.00742</a></li>
+    <li>Zuñiga Cajas, J. J., Peña Ramos, O. D., Lasso, E., Avelino, J., Corrales, J. C. &amp; Figueroa, C. (2025). <i>Estimating the severity of coffee leaf rust using deep learning and image processing.</i> Inteligencia Artificial, 28(76). <a href="https://journal.iberamia.org/index.php/intartif/article/view/1833">Link</a></li>
+    <li>Jepkoech, J., Kenduiywo, B., Mugo, D. &amp; Chebet, E. <i>JMuBEN (Arabica coffee leaf dataset).</i> Mendeley Data, doi <a href="https://doi.org/10.17632/t2r6rszp5c.1">10.17632/t2r6rszp5c.1</a>.</li>
+    <li>Cenicafé. <i>Variedades Castillo® Zonales: resistencia a la roya con mayor productividad</i> (Avance Técnico 489). <a href="https://www.researchgate.net/publication/330320913_Variedades_CastilloR_Zonales_resistencia_a_la_roya_con_mayor_productividad_avt0489">Link</a></li>
+  </ul>
+  <p style="margin-top:16px"><b>License of RoCoLe:</b> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. I can use and change the data if I give credit to the authors, link to the license, and say what I changed. This does not mean the authors support this project.</p>
+</div></section>
+
+<footer><div class="wrap">
+  Ojo al Cafetal · Álvaro Javier Cano · Machine Learning, UDEC · Final project
+</div></footer>
+
+</body>
+</html>lo® Zonales: resistencia a la roya con mayor productividad</i> (Avance Técnico 489). <a href="https://www.researchgate.net/publication/330320913_Variedades_CastilloR_Zonales_resistencia_a_la_roya_con_mayor_productividad_avt0489">Link</a></li>
+  </ul>
+  <p style="margin-top:16px"><b>License of RoCoLe:</b> <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. I can use and change the data if I give credit to the authors, link to the license, and say what I changed. This does not mean the authors support this project.</p>
 </div></section>
 
 <footer><div class="wrap">

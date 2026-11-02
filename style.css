@@ -51,7 +51,7 @@ th{color:var(--green);background:#F0E8DA}
 .bar i.h{background:var(--green)}.bar i.m{background:#6B4A8A}
 .note{color:var(--muted);font-size:16px}
 .callout{border-left:6px solid var(--rust);background:#FBEFE1;padding:16px 20px;border-radius:0 12px 12px 0;margin:18px 0}
-.formula{font-family:ui-monospace,Menlo,Consolas,monospace;background:#2B1D16;color:#F6F1E9;padding:12px 14px;border-radius:10px;font-size:15px;overflow-x:auto;margin:10px 0}
+.card ul.note{margin:8px 0}
 .steps{counter-reset:s;list-style:none;padding:0}
 .steps li{counter-increment:s;position:relative;padding:12px 14px 12px 56px;background:var(--card);border:1px solid var(--line);border-radius:12px;margin:10px 0}
 .steps li::before{content:counter(s);position:absolute;left:14px;top:10px;width:30px;height:30px;border-radius:50%;background:var(--green);color:#fff;font-weight:700;display:grid;place-items:center}
@@ -62,3 +62,12 @@ th{color:var(--green);background:#F0E8DA}
 footer{background:var(--dark);color:#D9CBBB;padding:36px 0;font-size:15px}
 footer a{color:var(--orange)}
 @media(max-width:600px){body{font-size:17px}.bar{grid-template-columns:110px 1fr 40px}th,td{font-size:15px;padding:10px}}
+.formula{font-family:'Domine',Georgia,'Times New Roman',serif;background:#F0E8DA;color:var(--dark);padding:14px 12px;border-radius:10px;font-size:21px;text-align:center;margin:10px 0;overflow-x:auto;line-height:1.5}
+.formula i{font-style:italic}
+.formula sub,.formula sup{font-size:.65em;line-height:0}
+.frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 4px}
+.frac>span:first-child{border-bottom:2px solid var(--dark);padding:0 6px 2px}
+.frac>span:last-child{padding:2px 6px 0}
+.card ul.note{margin:8px 0}
+.btn{display:inline-block;background:var(--green2);color:#fff;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:10px}
+.btn:hover{background:var(--green)}
