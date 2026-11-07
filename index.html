@@ -17,9 +17,11 @@
   <b>Ojo al Cafetal</b>
   <a href="#problem">Problem</a>
   <a href="#objectives">Objectives</a>
+  <a href="#phases">Phases</a>
   <a href="#framework">Reference framework</a>
   <a href="#models">Models</a>
   <a href="#data">Data</a>
+  <a href="#results">Results</a>
   <a href="#references">References</a>
   <a href="https://ojo-al-cafetal-app.onrender.com" style="color:#E39A55;font-weight:700">Try the app →</a>
 </div></nav>
@@ -72,6 +74,17 @@
   </ol>
 </div></section>
 
+<section id="phases"><div class="wrap">
+  <h2>Project phases</h2>
+  <p class="lead">The work had four phases. Each one led to the next.</p>
+  <ol class="steps">
+    <li><b>Problem and data.</b> I defined the problem: find coffee leaf diseases in time. I chose the RoCoLe dataset (1,560 photos, 390 plants, 6 classes) and checked its quality and its limits, such as robusta coffee and unbalanced classes.</li>
+    <li><b>Preparation and features.</b> I cut the leaf from the background and took 26 numbers from each photo: color, spots, and texture. I split the data by plant, so the test is fair.</li>
+    <li><b>Models and evaluation.</b> I trained and compared Logistic Regression, KNN, K-Means, Linear Regression, and Q-Learning. The model in the app (Random Forest) reaches 86% with expert masks and 83% with the automatic mask. Naming the disease is harder: about 52%.</li>
+    <li><b>Deployment and testing.</b> I trained the model on my computer and put the web app online on Render with Flask. I tested it with photos from outside the dataset and wrote down the limits: other diseases, photos with several leaves, and arabica coffee.</li>
+  </ol>
+</div></section>
+
 <section id="framework"><div class="wrap">
   <h2>Reference framework</h2>
   <p class="lead">The work and ideas my project is based on.</p>
@@ -107,7 +120,7 @@
   <h2>3. Theoretical framework: the models</h2>
   <p class="lead">Each model from our course answers a different question about a leaf. Here is how each one works, in simple words.</p>
   <table style="margin-bottom:24px">
-    <tr><th>Question</th><th>Possible model</th></tr>
+    <tr><th>Question</th><th>Model</th></tr>
     <tr><td>Is the leaf healthy or sick?</td><td>Logistic Regression</td></tr>
     <tr><td>Which disease is it?</td><td>KNN</td></tr>
     <tr><td>Which part of the leaf is damaged?</td><td>K-Means</td></tr>
@@ -171,13 +184,66 @@
         <li>It is robusta coffee, but Colombia grows mostly arabica</li>
         <li>The photos are not from Colombia</li>
         <li>The classes are not balanced</li>
-        <li>I have not tested it with real photos from the field yet</li>
+        <li>I only tested it with a few photos from other sources, not a full field study</li>
         <li>I must give credit to the authors, and say if I change the data</li>
       </ul>
     </div>
   </div>
-  <div class="callout"><b>My plan:</b> I will use RoCoLe as a base. Then I will take my own photos of Colombian arabica leaves (for example Castillo and Caturra) to test the model in real conditions. I will explain these limits in the final report.</div>
+  <div class="callout"><b>Next step:</b> I used RoCoLe as the base. The next step is to take my own photos of Colombian arabica leaves (for example Castillo and Caturra) to test the model in real conditions. The results below show these limits clearly.</div>
   <p class="note">Another risk: photos can be very different. The web page will ask for one leaf, good light, and a plain background.</p>
+</div></section>
+
+<section id="results" class="alt"><div class="wrap">
+  <h2>5. Results</h2>
+  <p class="lead">What the models did with the RoCoLe photos. Every number below comes from my own tests.</p>
+
+  <div class="stats" style="color:var(--dark)">
+    <div class="stat"><b>86%</b><span style="color:var(--muted)">healthy or sick (expert masks)</span></div>
+    <div class="stat"><b>83%</b><span style="color:var(--muted)">healthy or sick (automatic mask, as in the app)</span></div>
+    <div class="stat"><b>~52%</b><span style="color:var(--muted)">which disease (best model)</span></div>
+  </div>
+
+  <h3 style="margin:10px 0 12px">How I measured it</h3>
+  <ul>
+    <li><b>Features.</b> From each photo I took 26 numbers: leaf color (RGB and HSV), the share of yellow, orange and brown, the size and number of spots, and texture.</li>
+    <li><b>Split by plant.</b> RoCoLe has 4 photos of each plant. If photos of the same plant are in both train and test, the score looks better than it is. So I split the data by plant.</li>
+    <li><b>Same mask as the app.</b> The first models used the expert’s outline of the leaf. The app cuts the leaf by itself (GrabCut), and this gave a different result. I trained again with the automatic mask, so the number matches what the user gets.</li>
+  </ul>
+
+  <h3 style="margin:28px 0 12px">Models compared</h3>
+  <table>
+    <tr><th>Task</th><th>Model</th><th>Result</th></tr>
+    <tr><td>Healthy or sick</td><td>Random Forest (used in the app)</td><td>86.1% with expert masks; 83.5% with automatic masks (grouped by plant); 83.0% on the test set</td></tr>
+    <tr><td>Healthy or sick</td><td>Logistic Regression</td><td>81.0%</td></tr>
+    <tr><td>Healthy or sick</td><td>KNN</td><td>74.7%</td></tr>
+    <tr><td>Which disease (6 classes)</td><td>KNN</td><td>44.4%</td></tr>
+    <tr><td>Which disease (6 classes)</td><td>Best model I tried</td><td>about 52%</td></tr>
+    <tr><td>How much is damaged</td><td>Linear Regression</td><td>R² = 0.38 (only a trend)</td></tr>
+  </table>
+  <p class="note" style="margin-top:10px">The goal was more than 80% for healthy or sick, and the app model reaches it. Telling the diseases apart is much harder with these features. That is why the app does not name the disease; it says if the leaf looks sick.</p>
+
+  <h3 style="margin:28px 0 12px">K-Means: where is the damage?</h3>
+  <p>K-Means groups the pixels of the leaf by color (5 groups, using the a and b color channels). A group counts as damage if most of its pixels are yellow, orange or brown. The app paints these pixels in magenta and gives the percent of the leaf.</p>
+  <table style="margin-top:12px">
+    <tr><th>Rust level in RoCoLe</th><th>Typical K-Means result</th></tr>
+    <tr><td>Level 2 (6–20% by the expert scale)</td><td>about 4.5%</td></tr>
+    <tr><td>Level 3 (21–50%)</td><td>about 7.8%</td></tr>
+    <tr><td>Level 4 (more than 50%)</td><td>about 17.1%</td></tr>
+  </table>
+  <p class="note" style="margin-top:10px">The order is right, but K-Means gives lower numbers than the expert scale. It also misses rust level 1. So the app calls it an <i>estimate of the zone with signs of damage</i>, not a measure of damage.</p>
+
+  <h3 style="margin:28px 0 12px">Q-Learning: what to do?</h3>
+  <p>I made a simulation of one coffee plot. The agent can <i>keep watching</i>, <i>improve crop management</i>, or <i>apply fungicide</i>. The rewards follow Cenicafé’s guidance: resistant varieties (about 80% of the planted area) do not need chemical control, and susceptible ones like Caturra should be treated when the rust level grows. The app uses the learned table to give advice by rust level and variety.</p>
+  <div class="callout"><b>Honest note:</b> the simulation numbers (costs and rewards) are my assumptions. The advice is a help, not a diagnosis, and a technician should confirm it.</div>
+
+  <h3 style="margin:28px 0 12px">What does not work well</h3>
+  <div class="grid">
+    <div class="card"><span class="tag warn">LIMIT</span><h3>Other diseases</h3><p>The model only knows rust and red spider mite. A leaf with white mold or other spots can still be called “sick”.</p></div>
+    <div class="card"><span class="tag warn">LIMIT</span><h3>Messy photos</h3><p>If there are several leaves in the photo, the automatic cut can include more than one. The app asks for one leaf on a plain background and warns when the cut looks wrong.</p></div>
+    <div class="card"><span class="tag warn">LIMIT</span><h3>Other coffee types</h3><p>The training photos are robusta. In a few tests with other photos the answers were right, but the confidence was only 60–70%. A real test with arabica is still needed.</p></div>
+    <div class="card"><span class="tag warn">LIMIT</span><h3>Rust level 1</h3><p>Very early rust is the hardest case: the spots are small, and K-Means often finds almost nothing.</p></div>
+  </div>
+  <p style="margin-top:22px"><a class="btn" href="https://ojo-al-cafetal-app.onrender.com">Try the app →</a></p>
 </div></section>
 
 <section id="references"><div class="wrap">
