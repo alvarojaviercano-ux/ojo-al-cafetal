@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Model Evaluation – Ojo al Cafetal</title>
+<meta name="description" content="How well the models work, and where they fail.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Domine:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="menu.css">
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="index.html"><b>Ojo al Cafetal</b></a>
+  <a href="index.html#problem">Problem</a>
+  <a href="index.html#objectives">Objectives</a>
+  <a href="index.html#framework">Reference framework</a>
+  <details class="dd">
+    <summary>Project phases ▾</summary>
+    <div class="menu">
+      <a href="index.html#phases">All phases</a>
+      <a href="phase-1-understanding.html">1. Business and Data Understanding</a>
+      <a href="phase-2-data-engineering.html">2. Data Engineering</a>
+      <a href="phase-3-model-engineering.html">3. Model Engineering</a>
+      <a href="phase-4-evaluation.html">4. Model Evaluation</a>
+      <a href="phase-5-deployment.html">5. Deployment</a>
+      <a href="phase-6-monitoring.html">6. Monitoring and Maintenance</a>
+    </div>
+  </details>
+  <a href="index.html#references">References</a>
+  <a href="https://ojo-al-cafetal-app.onrender.com" style="color:#E39A55;font-weight:700">Try the app →</a>
+</div></nav>
+<script>
+(function(){var d=document.querySelector('details.dd');if(!d)return;
+document.addEventListener('click',function(e){if(!d.contains(e.target))d.removeAttribute('open');});
+})();
+</script>
+
+<header class="hero hero-small"><div class="wrap">
+  <p class="kicker">Phase 4 of 6 · CRISP-ML</p>
+  <h1>Model Evaluation</h1>
+  <p class="sub">How well the models work, and where they fail.</p>
+</div></header>
+
+<section class="alt"><div class="wrap">
+  <h2>Performance metrics</h2>
+  <p class="lead">The main number is accuracy. The goal was more than 80% for healthy or sick, and the app model reaches it.</p>
+  <div class="stats" style="color:var(--dark)">
+    <div class="stat"><b>86%</b><span style="color:var(--muted)">healthy or sick (expert outlines)</span></div>
+    <div class="stat"><b>83%</b><span style="color:var(--muted)">healthy or sick (automatic outline, as in the app)</span></div>
+    <div class="stat"><b>~52%</b><span style="color:var(--muted)">which disease (best model)</span></div>
+  </div>
+  <table>
+    <tr><th>Task</th><th>Model</th><th>Result</th></tr>
+    <tr><td>Healthy or sick</td><td>Random Forest (used in the app)</td><td>86.1% with expert outlines; 83.5% with automatic outlines (grouped by plant); 83.0% on the test set</td></tr>
+    <tr><td>Healthy or sick</td><td>Logistic Regression</td><td>81.0%</td></tr>
+    <tr><td>Healthy or sick</td><td>KNN</td><td>74.7%</td></tr>
+    <tr><td>Which disease (6 classes)</td><td>KNN</td><td>44.4%</td></tr>
+    <tr><td>Which disease (6 classes)</td><td>Best model I tried</td><td>about 52%</td></tr>
+    <tr><td>How much is damaged</td><td>Linear Regression</td><td>R² = 0.38 (only a trend)</td></tr>
+  </table>
+  <p class="note" style="margin-top:10px">Telling the diseases apart is much harder with these features. That is why the app does not name the disease; it says if the leaf looks sick. Precision and recall per class are still to be added.</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Cross-validation</h2>
+  <ul>
+    <li><b>By plant.</b> Every score above that says “grouped by plant” keeps the 4 photos of a plant together. It is a fair test, because the model never sees a plant it will be tested on.</li>
+    <li><b>Same outline as the app.</b> The first models used the expert’s outline. The app cuts the leaf by itself, and this gave a different result. I trained again with the automatic outline, so the number matches what the user gets.</li>
+  </ul>
+</div></section>
+
+<section class="alt"><div class="wrap">
+  <h2>K-Means: where is the damage?</h2>
+  <p>K-Means groups the pixels of the leaf by color. A group counts as damage if most of its pixels are yellow, orange or brown. The app paints these pixels in magenta and gives the percent of the leaf.</p>
+  <table style="margin-top:12px">
+    <tr><th>Rust level in RoCoLe</th><th>Typical K-Means result</th></tr>
+    <tr><td>Level 2 (6–20% by the expert scale)</td><td>about 4.5%</td></tr>
+    <tr><td>Level 3 (21–50%)</td><td>about 7.8%</td></tr>
+    <tr><td>Level 4 (more than 50%)</td><td>about 17.1%</td></tr>
+  </table>
+  <p class="note" style="margin-top:10px">The order is right, but K-Means gives lower numbers than the expert scale. It also misses rust level 1. So the app calls it an <i>estimate of the zone with signs of damage</i>, not a measure of damage.</p>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Q-Learning: what to do?</h2>
+  <p>I made a simulation of one coffee plot. The agent can <i>keep watching</i>, <i>improve crop management</i>, or <i>apply fungicide</i>. The rewards follow Cenicafé’s guidance: resistant varieties (about 80% of the planted area) do not need chemical control, and susceptible ones like Caturra should be treated when the rust level grows.</p>
+  <div class="callout"><b>Honest note:</b> the simulation numbers (costs and rewards) are my assumptions. The advice is a help, not a diagnosis, and a technician should confirm it.</div>
+</div></section>
+
+<section class="alt"><div class="wrap">
+  <h2>Risk analysis</h2>
+  <div class="grid">
+    <div class="card"><span class="tag warn">RISK</span><h3>Other diseases</h3><p>The model only knows rust and red spider mite. A leaf with white mold or other spots can still be called “sick”.</p></div>
+    <div class="card"><span class="tag warn">RISK</span><h3>Messy photos</h3><p>If there are several leaves in the photo, the automatic cut can include more than one. The app asks for one leaf on a plain background and warns when the cut looks wrong.</p></div>
+    <div class="card"><span class="tag warn">RISK</span><h3>Other coffee types</h3><p>The training photos are robusta. In a few tests with other photos the answers were right, but the confidence was only 60–70%. A real test with arabica is still needed.</p></div>
+    <div class="card"><span class="tag warn">RISK</span><h3>Rust level 1</h3><p>Very early rust is the hardest case: the spots are small, and K-Means often finds almost nothing.</p></div>
+    <div class="card"><span class="tag warn">RISK</span><h3>Class imbalance</h3><p>There are many more healthy leaves than sick ones, so I report accuracy together with the grouped test.</p></div>
+  </div>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Expert review</h2>
+  <p>The advice in the app follows the guidance of Cenicafé (resistant and susceptible varieties). A coffee technician has not yet reviewed the results. Until then, the app tells the user to check more leaves and talk to a technician before applying any product.</p>
+</div></section>
+
+<section><div class="wrap"><div class="pager"><a href="phase-3-model-engineering.html">← Model Engineering</a><a href="phase-5-deployment.html">Deployment →</a></div></div></section>
+
+<footer><div class="wrap">
+  Ojo al Cafetal · Álvaro Javier Cano · Machine Learning, UDEC · Final project
+</div></footer>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Model Engineering – Ojo al Cafetal</title>
+<meta name="description" content="Choosing, training and checking the models.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Domine:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="menu.css">
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="index.html"><b>Ojo al Cafetal</b></a>
+  <a href="index.html#problem">Problem</a>
+  <a href="index.html#objectives">Objectives</a>
+  <a href="index.html#framework">Reference framework</a>
+  <details class="dd">
+    <summary>Project phases ▾</summary>
+    <div class="menu">
+      <a href="index.html#phases">All phases</a>
+      <a href="phase-1-understanding.html">1. Business and Data Understanding</a>
+      <a href="phase-2-data-engineering.html">2. Data Engineering</a>
+      <a href="phase-3-model-engineering.html">3. Model Engineering</a>
+      <a href="phase-4-evaluation.html">4. Model Evaluation</a>
+      <a href="phase-5-deployment.html">5. Deployment</a>
+      <a href="phase-6-monitoring.html">6. Monitoring and Maintenance</a>
+    </div>
+  </details>
+  <a href="index.html#references">References</a>
+  <a href="https://ojo-al-cafetal-app.onrender.com" style="color:#E39A55;font-weight:700">Try the app →</a>
+</div></nav>
+<script>
+(function(){var d=document.querySelector('details.dd');if(!d)return;
+document.addEventListener('click',function(e){if(!d.contains(e.target))d.removeAttribute('open');});
+})();
+</script>
+
+<header class="hero hero-small"><div class="wrap">
+  <p class="kicker">Phase 3 of 6 · CRISP-ML</p>
+  <h1>Model Engineering</h1>
+  <p class="sub">Choosing, training and checking the models.</p>
+</div></header>
+
+<section><div class="wrap">
+  <h2>Algorithm selection</h2>
+  <p class="lead">Each model from our course answers a different question about a leaf.</p>
+  <div class="grid">
+    <div class="card"><span class="tag">K-MEANS</span><h3>Which part is damaged?</h3>
+      <p>It puts pixels with similar colors into <i>K</i> groups. Green leaf, spots, and background end up in different groups.</p>
+      <p class="note">Steps: pick K centers. Put each point in the group of the nearest center. Move each center to the middle of its group. Repeat.</p></div>
+    <div class="card"><span class="tag">LINEAR REGRESSION</span><h3>How much is damaged?</h3>
+      <p>It draws a line to predict a number: the percent of damage.</p></div>
+    <div class="card"><span class="tag">LOGISTIC REGRESSION</span><h3>Healthy or sick?</h3>
+      <p>It gives a number between 0 and 1. If the number is above 0.5, we say the leaf is sick.</p></div>
+    <div class="card"><span class="tag">KNN</span><h3>Which disease is it?</h3>
+      <p>K-Nearest Neighbors. It finds the <i>K</i> leaves most like the new one, and picks the disease that shows up the most.</p></div>
+    <div class="card"><span class="tag">Q-LEARNING</span><h3>What is the best action?</h3>
+      <p>An agent learns by trying actions and getting rewards. A table keeps a score for each action in each situation.</p></div>
+    <div class="card"><span class="tag">RANDOM FOREST</span><h3>Healthy or sick? (used in the app)</h3>
+      <p>Many decision trees vote. It handled the 26 numbers better than the simple models.</p></div>
+  </div>
+</div></section>
+
+<section class="alt"><div class="wrap">
+  <h2>Training</h2>
+  <ul>
+    <li><b>Split.</b> 80% of the data to train and 20% to test (train_test_split, random_state = 42).</li>
+    <li><b>Healthy or sick.</b> Logistic Regression, KNN and Random Forest (300 trees) were trained on the 26 numbers.</li>
+    <li><b>Which disease.</b> KNN and other models were tried on the 6 classes.</li>
+    <li><b>How much damage.</b> Linear Regression predicts the middle of each rust range: 0, 3, 13, 35.5 and 75%.</li>
+    <li><b>Where is the damage.</b> K-Means runs on every new photo, on the pixels of the leaf only.</li>
+    <li><b>What to do.</b> Q-Learning runs in a simulated coffee plot. It learns one table for resistant and one for susceptible varieties.</li>
+  </ul>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Validation</h2>
+  <p>I did not use a plain random split only. RoCoLe has 4 photos of each plant, so photos of the same plant in both train and test make the score look better than it is. I also checked every model with a split <b>by plant</b> (GroupKFold).</p>
+</div></section>
+
+<section class="alt"><div class="wrap">
+  <h2>Hyperparameters</h2>
+  <ul>
+    <li><b>Random Forest:</b> 300 trees.</li>
+    <li><b>K-Means for the damage zone:</b> I compared two color spaces. With red-green-blue the result was dominated by brightness, and the median damage was 0 in every class. With the a and b color channels (Lab) it worked, so I used 5 groups and a vote of 30%: a group counts as damage if at least 30% of its pixels are yellow, orange or brown.</li>
+    <li><b>Limit:</b> I did not run a full search of settings for every model. The numbers above come from a few careful comparisons, not from an automatic search.</li>
+  </ul>
+</div></section>
+
+<section><div class="wrap"><div class="pager"><a href="phase-2-data-engineering.html">← Data Engineering</a><a href="phase-4-evaluation.html">Model Evaluation →</a></div></div></section>
+
+<footer><div class="wrap">
+  Ojo al Cafetal · Álvaro Javier Cano · Machine Learning, UDEC · Final project
+</div></footer>
+
+</body>
+</html>

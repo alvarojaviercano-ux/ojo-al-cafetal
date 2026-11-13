@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Deployment – Ojo al Cafetal</title>
+<meta name="description" content="From my computer to a web page a farmer can open.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌿</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Domine:wght@600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="menu.css">
+</head>
+<body>
+
+<nav><div class="wrap">
+  <a class="brand" href="index.html"><b>Ojo al Cafetal</b></a>
+  <a href="index.html#problem">Problem</a>
+  <a href="index.html#objectives">Objectives</a>
+  <a href="index.html#framework">Reference framework</a>
+  <details class="dd">
+    <summary>Project phases ▾</summary>
+    <div class="menu">
+      <a href="index.html#phases">All phases</a>
+      <a href="phase-1-understanding.html">1. Business and Data Understanding</a>
+      <a href="phase-2-data-engineering.html">2. Data Engineering</a>
+      <a href="phase-3-model-engineering.html">3. Model Engineering</a>
+      <a href="phase-4-evaluation.html">4. Model Evaluation</a>
+      <a href="phase-5-deployment.html">5. Deployment</a>
+      <a href="phase-6-monitoring.html">6. Monitoring and Maintenance</a>
+    </div>
+  </details>
+  <a href="index.html#references">References</a>
+  <a href="https://ojo-al-cafetal-app.onrender.com" style="color:#E39A55;font-weight:700">Try the app →</a>
+</div></nav>
+<script>
+(function(){var d=document.querySelector('details.dd');if(!d)return;
+document.addEventListener('click',function(e){if(!d.contains(e.target))d.removeAttribute('open');});
+})();
+</script>
+
+<header class="hero hero-small"><div class="wrap">
+  <p class="kicker">Phase 5 of 6 · CRISP-ML</p>
+  <h1>Deployment</h1>
+  <p class="sub">From my computer to a web page a farmer can open.</p>
+</div></header>
+
+<section><div class="wrap">
+  <h2>Implementation in production</h2>
+  <ol class="steps">
+    <li><b>Train on my computer.</b> All training runs locally. Render only loads the trained models and uses them.</li>
+    <li><b>Save the models.</b> The trained models are saved as files (<code>models/</code>) and kept in the project.</li>
+    <li><b>Flask app.</b> The page receives a photo, cuts the leaf, takes the 26 numbers, and gives the answer, the magenta zone and the advice.</li>
+    <li><b>Publish on Render.</b> The app runs as a web service (gunicorn). Each push to GitHub updates it.</li>
+  </ol>
+  <p style="margin-top:18px"><a class="btn" href="https://ojo-al-cafetal-app.onrender.com">Try the app →</a></p>
+  <p class="note" style="margin-top:12px">The free plan sleeps after a while without visits. The first visit can take about a minute to wake it up.</p>
+</div></section>
+
+<section class="alt"><div class="wrap">
+  <h2>What the user sees</h2>
+  <ol class="steps">
+    <li><b>Upload.</b> The user takes a photo of one leaf with a phone and sends it, and says the variety if they know it.</li>
+    <li><b>Analyze.</b> The app checks the color and the spots and marks the zone it analyzed (yellow line).</li>
+    <li><b>Receive.</b> The user gets: healthy or sick, how sure the model is, the zone with signs of damage in magenta, and what to do for resistant or susceptible varieties.</li>
+  </ol>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Documentation and training for users</h2>
+  <ul>
+    <li>The page explains how to take a good photo: one leaf, up close, plain background, good light.</li>
+    <li>The page shows a warning when the confidence is low or when the cut does not look like a single leaf.</li>
+    <li>The page says what the app can and cannot do: it only knows rust and red spider mite, it is an estimate, and it is not a diagnosis.</li>
+    <li>This website explains the method and the limits for anyone who wants to check the work.</li>
+  </ul>
+</div></section>
+
+<section class="alt"><div class="wrap">
+  <h2>Protocols</h2>
+  <ul>
+    <li><b>Confidence levels.</b> The answer comes with a confidence level: high (80% or more), medium (65–80%) or low.</li>
+    <li><b>Safe advice.</b> The advice always asks the user to check more leaves and to talk to a technician before applying any product.</li>
+    <li><b>Feedback.</b> There is no feedback form yet. It is part of the plan in Phase 6.</li>
+  </ul>
+</div></section>
+
+<section><div class="wrap"><div class="pager"><a href="phase-4-evaluation.html">← Model Evaluation</a><a href="phase-6-monitoring.html">Monitoring and Maintenance →</a></div></div></section>
+
+<footer><div class="wrap">
+  Ojo al Cafetal · Álvaro Javier Cano · Machine Learning, UDEC · Final project
+</div></footer>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+/* Dropdown menu for the project phases + small page helpers */
+nav .brand{margin-right:auto;text-decoration:none}
+nav .brand b{margin-right:0;color:var(--cream)}
+nav .dd{position:relative}
+nav .dd summary{list-style:none;cursor:pointer;color:#D9CBBB;font-size:15px;user-select:none}
+nav .dd summary::-webkit-details-marker{display:none}
+nav .dd summary:hover,nav .dd[open] summary{color:var(--orange)}
+nav .dd .menu{position:absolute;top:100%;left:-14px;min-width:280px;background:var(--dark);
+  border:1px solid #5A4235;border-radius:10px;padding:8px;box-shadow:0 10px 24px rgba(0,0,0,.35);z-index:10}
+nav .dd .menu a{display:block;padding:9px 12px;border-radius:8px;font-size:15px;white-space:nowrap}
+nav .dd .menu a:hover{background:#3A2A21}
+@media (max-width:700px){
+  nav .dd .menu{position:static;box-shadow:none;margin-top:6px;min-width:0}
+  nav .dd .menu a{white-space:normal}
+}
+header.hero.hero-small{padding:40px 0 36px}
+header.hero.hero-small h1{font-size:clamp(30px,5.5vw,48px)}
+.phase-grid{grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
+a.phase-card{text-decoration:none;color:inherit;display:block;transition:transform .12s,border-color .12s}
+a.phase-card:hover{transform:translateY(-3px);border-color:var(--green)}
+a.phase-card h3{color:var(--dark)}
+.pager{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap}
+.pager a{padding:12px 18px;border:1px solid var(--line);border-radius:10px;background:var(--card);
+  text-decoration:none;font-weight:700}
+.pager a:hover{border-color:var(--green)}
+code{background:#EFE6D7;padding:1px 6px;border-radius:5px;font-size:.92em}
